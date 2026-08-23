@@ -11,7 +11,10 @@
     "test:browser": "npm run build && node --test --test-concurrency=1 tests/*.test.mjs",
     "test:browser:playwright": "npm run build && node --test --test-concurrency=1 tests/*-playwright.test.mjs tests/customer-standalone.test.mjs",
     "test:browser:puppeteer": "npm run build && node --test --test-concurrency=1 tests/*-puppeteer.test.mjs",
-    "test:guard": "node --test tests/customer-config-guard.test.mjs"
+    "test:guard": "node --test tests/customer-config-guard.test.mjs",
+    "lint:ores": "if [ -f .ores-lint/lint.sh ]; then sh .ores-lint/lint.sh; else echo 'ores-lint not installed'; fi",
+    "prepublishOnly": "npm run lint:ores",
+    "prebuild": "npm run lint:ores"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.89.0",
@@ -24,5 +27,13 @@
     "playwright": "^1.61.1",
     "puppeteer": "^25.2.1",
     "typescript": "^5.9.3"
+  },
+  "oresLint": {
+    "note": "Declared, not installed. ores-lint resolves these from a global install - see .ores-lint/README.md",
+    "requires": {
+      "eslint": ">=9",
+      "typescript-eslint": ">=8 (optional; without it .ts files are skipped)"
+    },
+    "install": "npm i -g eslint typescript-eslint"
   }
 }
